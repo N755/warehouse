@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block content %}
+
+<table class="pr">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Unit</th>
+      <th>Unit_price</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for product in products %}
+    <tr>
+      <td>{{ product.name }}</td>
+      <td>{{ product.unit }}</td>
+      <td>{{ product.unit_price }}</td>
+      <td>{{ product.quantity }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock content %} {% block content %}
+
+<form method="POST" action="/add">
+  {{ form.csrf_token }}
+  <p>
+    {{ form.name.label }}<br />
+    {{ form.name() }}
+  </p>
+  <p>
+    {{ form.unit.label }}<br />
+    {{ form.unit() }}
+  </p>
+  <p>
+    {{ form.unit_price.label }}<br />
+    {{ form.unit_price() }}
+  </p>
+  <p>
+    {{ form.quantity.label }}<br />
+    {{ form.quantity() }}
+  </p>
+
+  <p>
+    <input type="submit" value="Save" />
+  </p>
+</form>
+
+{% endblock content %}
