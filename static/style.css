@@ -107,7 +107,7 @@ body {
 
 table {
   border-spacing: 30px;
-  width: 400px;
+  width: 800px;
 }
 tr:nth-child(odd) {
   background-color: #c5fbd5;
@@ -120,4 +120,9 @@ h1 {
 }
 th {
   background-color: #2d8450;
+}
+
+.import {
+  display: block;
+  margin-right: auto;
 }

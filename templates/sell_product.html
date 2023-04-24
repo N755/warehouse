@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block content %}
+<form
+  method="POST"
+  action="{{ url_for('sell_product', product_name=product.name) }}"
+>
+  <label for="quantity">Quantity:</label>
+  <input
+    type="number"
+    id="quantity"
+    name="quantity"
+    min="1"
+    max="{{ product.quantity }}"
+    required
+  />
+  <br /><br />
+  <input type="submit" value="Sell" />
+</form>
+{% endblock %}

@@ -1,49 +1,58 @@
 {% extends "base.html" %} {% block content %}
 
-<table class="pr">
+<form
+  class="import"
+  method="post"
+  action="{{ url_for('import_data') }}"
+  enctype="multipart/form-data"
+>
+  <label for="file">Choose file for import:</label><br />
+  <input type="file" name="file" id="file" /><br /><br />
+  <input type="submit" value="Import" />
+</form>
+<br />
+<form method="get" action="{{ url_for('export_data') }}">
+  <input type="submit" value="Export" />
+</form>
+
+<table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Unit</th>
-      <th>Unit_price</th>
-      <th>Quantity</th>
+      <th>name</th>
+      <th>unit</th>
+      <th>unit_price</th>
+      <th>quantity</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    {% for product in products %}
+    {% for item in ITEMS %}
     <tr>
-      <td>{{ product.name }}</td>
-      <td>{{ product.unit }}</td>
-      <td>{{ product.unit_price }}</td>
-      <td>{{ product.quantity }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.unit }}</td>
+      <td>{{ item.unit_price }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>
+        <form
+          action="{{ url_for('sell_product', product_name=item.name) }}"
+          method="post"
+        >
+          {{ item.form.csrf_token }} {{ item.form.quantity }} {{
+          item.form.submit }}
+        </form>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
-{% endblock content %} {% block content %}
-
 <form method="POST" action="/add">
   {{ form.csrf_token }}
-  <p>
-    {{ form.name.label }}<br />
-    {{ form.name() }}
-  </p>
-  <p>
-    {{ form.unit.label }}<br />
-    {{ form.unit() }}
-  </p>
-  <p>
-    {{ form.unit_price.label }}<br />
-    {{ form.unit_price() }}
-  </p>
-  <p>
-    {{ form.quantity.label }}<br />
-    {{ form.quantity() }}
-  </p>
-
-  <p>
-    <input type="submit" value="Save" />
-  </p>
+  <table>
+    <td>{{ form.name.label }} {{ form.name(value='') }}</td>
+    <td>{{ form.unit.label }} {{ form.unit(value='') }}</td>
+    <td>{{ form.unit_price.label }} {{ form.unit_price(value='') }}</td>
+    <td>{{ form.quantity.label }} {{ form.quantity(value='') }}</td>
+    <td><input type="submit" value="Add product" /></td>
+  </table>
 </form>
-
 {% endblock content %}
